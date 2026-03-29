@@ -575,10 +575,10 @@
       // 날짜별 그룹
       const grouped = {};
       for (const f of allFiles) {
-        const photoDate = (f.imageMediaMetadata && f.imageMediaMetadata.time)
-  ? f.imageMediaMetadata.time
+      let rawDate = (f.imageMediaMetadata && f.imageMediaMetadata.time)
+  ? f.imageMediaMetadata.time.replace(/^(\d{4}):(\d{2}):(\d{2})/, '$1-$2-$3')
   : f.createdTime;
-const key = formatGroupKey(photoDate);
+const key = formatGroupKey(rawDate);
         if (!grouped[key]) grouped[key] = [];
         grouped[key].push(f);
       }
