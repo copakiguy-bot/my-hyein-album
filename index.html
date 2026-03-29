@@ -554,7 +554,7 @@
       do {
         const url = new URL("https://www.googleapis.com/drive/v3/files");
         url.searchParams.set("q", `'${CONFIG.FOLDER_ID}' in parents and mimeType contains 'image/' and trashed=false`);
-        url.searchParams.set("fields", "nextPageToken, files(id, name, createdTime, modifiedTime)");
+        url.searchParams.set("fields", "nextPageToken, files(id, name, createdTime, modifiedTime, imageMediaMetadata)");
         url.searchParams.set("key", CONFIG.API_KEY);
         url.searchParams.set("pageSize", "100");
         url.searchParams.set("orderBy", "createdTime asc");
@@ -575,7 +575,10 @@
       // 날짜별 그룹
       const grouped = {};
       for (const f of allFiles) {
-        const key = formatGroupKey(f.createdTime);
+        const photoDate = (f.imageMediaMetadata && f.imageMediaMetadata.time)
+  ? f.imageMediaMetadata.time
+  : f.createdTime;
+const key = formatGroupKey(photoDate);
         if (!grouped[key]) grouped[key] = [];
         grouped[key].push(f);
       }
