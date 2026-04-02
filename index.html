@@ -500,7 +500,7 @@
 
     let chapterNum = 1;
 
-    for (const [key, photos] of Object.entries(grouped)) {
+    for (const [key, photos] of Object.entries(grouped).sort()) {
       // Chapter header
       const chapter = document.createElement("section");
       chapter.className = "chapter";
